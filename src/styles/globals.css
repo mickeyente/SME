@@ -1,0 +1,94 @@
+/* System font stack keeps the product fast and usable without external font requests. */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   DESIGN TOKENS — "The Seal"
+   An official-registry identity: deep navy authority, a warm
+   amber accent, and risk-state colors used ONLY for the score
+   system (never as decoration). Do not add new accent colors
+   without updating this file — the palette is deliberately small.
+   ============================================================ */
+:root {
+  /* Core palette */
+  --color-ink: 20 33 61;          /* #14213D — primary text, nav, authority */
+  --color-ink-soft: 51 65 96;     /* lighter ink for secondary text */
+  --color-paper: 246 245 241;     /* #F6F5F1 — warm-neutral background */
+  --color-paper-raised: 255 255 255; /* card surfaces */
+  --color-amber: 232 163 61;      /* #E8A33D — primary CTA / medium-risk */
+
+  /* Risk-state system — reused for score gauge, chips, alerts */
+  --color-safe: 47 122 79;        /* #2F7A4F — compliant / low risk */
+  --color-caution: 232 163 61;    /* same as amber — medium risk */
+  --color-risk: 193 68 60;        /* #C1443C — non-compliant / high risk */
+
+  /* Borders & lines */
+  --color-line: 20 33 61 / 0.12;
+
+  /* Type scale (rem) */
+  --text-display-lg: 2.75rem;
+  --text-display: 2rem;
+  --text-title: 1.375rem;
+  --text-body: 1rem;
+  --text-small: 0.875rem;
+  --text-caption: 0.75rem;
+
+  /* Radius — the seal is circular, but UI chrome stays quiet/rectangular */
+  --radius-card: 14px;
+  --radius-control: 10px;
+
+  /* Motion */
+  --ease-seal: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+body {
+  background-color: rgb(var(--color-paper));
+  color: rgb(var(--color-ink));
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body::before {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
+  content: '';
+  background:
+    radial-gradient(circle at 0% 0%, rgb(var(--color-amber) / 0.12), transparent 27rem),
+    radial-gradient(circle at 100% 20%, rgb(var(--color-safe) / 0.07), transparent 23rem);
+  pointer-events: none;
+}
+
+::selection { background: rgb(var(--color-amber) / 0.35); }
+
+.font-display {
+  font-family: 'General Sans', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.font-data {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.surface-grid {
+  background-image: linear-gradient(rgb(var(--color-ink) / 0.035) 1px, transparent 1px), linear-gradient(90deg, rgb(var(--color-ink) / 0.035) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* Visible keyboard focus everywhere — required, not optional */
+:focus-visible {
+  outline: 2px solid rgb(var(--color-amber));
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

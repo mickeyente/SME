@@ -1,0 +1,12 @@
+'use client'
+
+import { useState } from 'react'
+
+const starters = ['What should we do after a customer data request?', 'How do I brief my team on privacy?', 'What goes in an incident report?']
+
+export default function CisoPage() {
+  const [message, setMessage] = useState('')
+  const [sent, setSent] = useState<string | null>(null)
+  const send = (value: string) => { if (value.trim()) { setSent(value.trim()); setMessage('') } }
+  return <div className="mx-auto max-w-3xl"><section className="text-center"><div className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-ink text-title text-paper">✦</div><p className="mt-5 text-small font-semibold uppercase tracking-[0.16em] text-safe">Your virtual CISO</p><h1 className="mt-2 font-display text-display-lg">Practical security guidance.</h1><p className="mx-auto mt-3 max-w-xl text-body text-ink-soft">Ask a question in plain language. Get a focused next step for your business.</p></section><section className="mt-8 rounded-card bg-paper-raised p-5 shadow-xl shadow-ink/5 ring-1 ring-line sm:p-6">{sent ? <div className="space-y-5"><div className="ml-auto max-w-[85%] rounded-2xl rounded-tr-sm bg-ink px-4 py-3 text-small text-paper">{sent}</div><div className="max-w-[90%] rounded-2xl rounded-tl-sm bg-ink/5 px-4 py-3 text-small leading-6 text-ink">A good first step is to record the request, identify the data involved, and assign one accountable owner. I&apos;ve added this to your recommended actions so you can track it.</div></div> : <div className="py-5 text-center text-small text-ink-soft">Start a conversation — your questions stay within this workspace.</div>}<div className="mt-6 flex gap-2 border-t border-line pt-5"><input value={message} onChange={(event) => setMessage(event.target.value)} onKeyDown={(event) => { if (event.key === 'Enter') send(message) }} placeholder="Ask about privacy, access or incidents..." className="min-w-0 flex-1 rounded-control border border-ink/15 bg-paper px-4 py-3 text-small text-ink placeholder:text-ink-soft focus:border-ink focus:outline-none" /><button onClick={() => send(message)} className="rounded-control bg-ink px-4 py-3 text-small font-semibold text-paper">Send</button></div></section><div className="mt-5 flex flex-wrap justify-center gap-2">{starters.map((starter) => <button key={starter} onClick={() => send(starter)} className="rounded-full border border-ink/15 px-3 py-2 text-caption text-ink-soft transition hover:border-ink hover:text-ink">{starter}</button>)}</div></div>
+}
